@@ -5,23 +5,31 @@ require "config.php";
 use App\Student;
 
 try {
-	Student::register('Richard', 'Feynman', 'richard@feynman.com');
-	echo "<li>Added 1 student";
+	Student::register('Richard', 'Male', '04/20/2021', 'Ben Riley', 'ben@riley.com', '19-B First Avenue', '0912-545-2913');
+	echo "<li>Added 1 pet";
 
-	$students = [
+	$pets = [
 		[
-			'first_name' => 'Albert',
-			'last_name' => 'Einstein',
-			'email' => 'albert@einstein.com'
+			'name' => 'Albert',
+			'gender' => 'Male',
+			'birthdate' => '14/02/2020',
+			'owner' => 'John Doe',
+			'email' => 'john@doe.com',
+			'address' => '182-A 1st Street Tagumpay',
+			'contact_number' => '0905-425-5832'
 		],
 		[
-			'first_name' => 'Paul',
-			'last_name' => 'Erdos',
-			'email' => 'paul@erdos.com'
+			'name' => 'Sara',
+			'gender' => 'Female',
+			'birthdate' => '14/02/2019',
+			'owner' => 'Lisa Burrow',
+			'email' => 'lisa@burrow.com',
+			'address' => '182-A 1st Street Tagumpay',
+			'contact_number' => '0905-425-5832'
 		]
 	];
-	Student::registerMany($students);
-	echo "<li>Added " . count($students) . " more students";
+	Student::registerMany($pets);
+	echo "<li>Added " . count($pets) . " more pets";
 	echo "<br /><a href='index.php'>Proceed to Index Page</a>";
 
 } catch (PDOException $e) {

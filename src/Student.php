@@ -7,9 +7,13 @@ use PDO;
 class Student
 {
 	protected $id;
-	protected $first_name;
-	protected $last_name;
+	protected $name;
+	protected $gender;
+	protected $birthDate;
+	protected $owner;
 	protected $email;
+	protected $address;
+	protected $contact_number;
 	protected $created_at;
 
 	public function getId()
@@ -17,24 +21,39 @@ class Student
 		return $this->id;
 	}
 
-	public function getFullName()
+	public function getName()
 	{
-		return $this->first_name . ' ' . $this->last_name;
+		return $this->name;
 	}
 
-	public function getFirstName()
+	public function getGender()
 	{
-		return $this->first_name;
+		return $this->gender;
 	}
 
-	public function getLastName()
+	public function getBirthDate()
 	{
-		return $this->last_name;
+		return $this->birthdate;
+	}
+
+	public function getOwner()
+	{
+		return $this->owner;
 	}
 
 	public function getEmail()
 	{
 		return $this->email;
+	}
+
+	public function getAddress()
+	{
+		return $this->address;
+	}
+
+	public function getContactNumber()
+	{
+		return $this->contact_number;
 	}
 
 	public static function list()
@@ -45,12 +64,12 @@ class Student
 			$sql = "SELECT * FROM students";
 			$statement = $conn->query($sql);
 			
-			$students = [];
+			$pets = [];
 			while ($row = $statement->fetchObject('App\Student')) {
-				array_push($students, $row);
+				array_push($pets, $row);
 			}
 
-			return $students;
+			return $pets;
 		} catch (PDOException $e) {
 			error_log($e->getMessage());
 		}
@@ -81,14 +100,14 @@ class Student
 		return null;
 	}
 
-	public static function register($first_name, $last_name, $email)
+	public static function register($name, $gender, $birthdate, $owner, $email, $address, $contact_number)
 	{
 		global $conn;
 
 		try {
 			$sql = "
-				INSERT INTO students (first_name, last_name, email)
-				VALUES ('$first_name', '$last_name', '$email')
+				INSERT INTO students (name, gender, birthdate, owner, email, address, contact_number)
+				VALUES ('$name', '$gender', '$birthdate', '$owner', '$email', '$address', '$contact_number')
 			";
 			$conn->exec($sql);
 
@@ -109,9 +128,14 @@ class Student
 				$sql = "
 					INSERT INTO students
 					SET
-						first_name=\"{$user['first_name']}\",
-						last_name=\"{$user['last_name']}\",
-						email=\"{$user['email']}\"
+						name=\"{$user['name']}\",
+						gender=\"{$user['gender']}\",
+						birthdate=\"{$user['birthdate']}\",
+						owner=\"{$user['owner']}\",
+						email=\"{$user['email']}\",
+						address=\"{$user['address']}\",
+						contact_number=\"{$user['contact_number']}\";
+						
 				";
 				$conn->exec($sql);
 			}
@@ -123,7 +147,7 @@ class Student
 		return false;
 	}
 
-	public static function update($id, $first_name, $last_name, $email)
+	public static function update($id, $name, $gender, $birthdate, $owner, $email, $address, $contact_number)
 	{
 		global $conn;
 
@@ -131,16 +155,24 @@ class Student
 			$sql = "
 				UPDATE students
 				SET
-					first_name=?,
-					last_name=?,
-					email=?
+					name=?,
+					gender=?,
+					birthdate=?,
+					owner=?,
+					email=?,
+					address=?,
+					contact_number=?
 				WHERE id=?
 			";
 			$statement = $conn->prepare($sql);
 			return $statement->execute([
-				$first_name,
-				$last_name,
+				$name,
+				$gender,
+				$birthdate,
+				$owner,
 				$email,
+				$address,
+				$contact_number,
 				$id
 			]);
 		} catch (PDOException $e) {
@@ -150,7 +182,7 @@ class Student
 		return false;
 	}
 
-	public static function updateUsingPlaceholder($id, $first_name, $last_name, $email)
+	public static function updateUsingPlaceholder($id, $name, $gender, $birthdate, $owner, $email, $address, $contact_number)
 	{
 		global $conn;
 
@@ -158,16 +190,24 @@ class Student
 			$sql = "
 				UPDATE students
 				SET
-					first_name=:first_name,
-					last_name=:last_name,
-					email=:email
+				name=Name,
+				gender=Gender,
+				owner=owner,
+				birthdate=Birth Date,
+				email=Email,
+				address=Address,
+				contact_number=Contact Number,
 				WHERE id=:id
 			";
 			$statement = $conn->prepare($sql);
 			return $statement->execute([
-				'first_name' => $first_name,
-				'last_name' => $last_name,
+				'name' => $name,
+				'gender' => $gender,
+				'birthdate' => $birthdate,
+				'owner' => $owner,
 				'email' => $email,
+				'address' => $address,
+				'contact_number' => $contact_number,
 				'id' => $id
 			]);
 		} catch (PDOException $e) {

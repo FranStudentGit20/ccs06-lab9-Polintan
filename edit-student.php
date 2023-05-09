@@ -4,38 +4,87 @@ require "config.php";
 
 use App\Student;
 
-$student_id = $_GET['id'];
+$pet_id = $_GET['id'];
 
-$student = Student::getById($student_id);
+$pet = Student::getById($pet_id);
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Edit Student</title>
+	<title>Edit Pet</title>
 </head>
+<style>
+	body{
+		text-align: center;
+		font-size: 46px;
+		font-family: arial;
+		background: linear-gradient(red, transparent),
+		linear-gradient(to top left, yellow, transparent),
+		linear-gradient(to top right, blue, transparent);
+		background-blend-mode: screen;
+	}
+
+	h1{
+		border: 40px;
+		border-radius: 30px;
+		background-color: #FF6941;
+		outline-style: solid;
+		outline-color: black;
+	}
+
+	input{
+		height: 46px;
+		width: 250px;
+		border-radius: 30px;
+		font-size: 16px;
+	}
+	
+	button{
+		height: 50px;
+		width: 100px;
+		font-size: 30px;
+		font-weight: bold;
+	}
+</style>
 <body>
-<h1>Edit Student</h1>
+<h1>Edit Pet</h1>
 
 <form action="save-changes.php" method="POST">
-	<input type="hidden" name="id" value="<?php echo $student->getId(); ?>">
+	<input type="hidden" name="id" value="<?php echo $pet->getId(); ?>">
 	<div>
-		<label>First Name</label>
-		<input type="text" name="first_name" placeholder="First Name" value="<?php echo $student->getFirstName();?>" />	
+		<label>Name of Pet:</label>
+		<input type="text" name="name" placeholder="Name" value="<?php echo $pet->getName();?>" />	
 	</div>
 	<div>
-		<label>Last Name</label>
-		<input type="text" name="last_name" placeholder="Last Name" value="<?php echo $student->getLastName();?>" />	
+		<label>Gender:</label>
+		<input type="text" name="gender" placeholder="Gender" value="<?php echo $pet->getGender();?>" />	
 	</div>
 	<div>
-		<label>Email Address</label>
-		<input type="email" name="email" placeholder="email@address.com" value="<?php echo $student->getEmail();?>" />	
+		<label>Date of Birth:</label>
+		<input type="date" name="birthdate" placeholder="Birth Date" value="<?php echo $pet->getBirthDate();?>" />	
+	</div>
+	<div>
+		<label>Owner of Pet:</label>
+		<input type="text" name="owner" placeholder="Owner" value="<?php echo $pet->getOwner();?>" />	
+	</div>
+	<div>
+		<label>Email Address:</label>
+		<input type="email" name="email" placeholder="email@address.com" value="<?php echo $pet->getEmail();?>" />	
+	</div>
+	<div>
+		<label>Address:</label>
+		<input type="text" name="address" placeholder="Address" value="<?php echo $pet->getAddress();?>" />	
+	</div>
+	<div>
+		<label>Contact Number:</label>
+		<input type="text" name="contact_number" placeholder="Contact Number" value="<?php echo $pet->getContactNumber();?>" />	
 	</div>
 	<div>
 		<button>
 			Save
-		</button>
+		</button><br>
 		<a href="index.php">Cancel</a>
 	</div>
 </form>

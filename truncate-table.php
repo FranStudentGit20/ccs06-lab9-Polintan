@@ -7,6 +7,7 @@ use App\Student;
 try {
 	Student::clearTable();
 	echo "<li>Truncated table";
+	echo "<br /><a href='index.php'>Return to Index Page</a>";
 
 } catch (PDOException $e) {
 	error_log($e->getMessage());
